@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Ultimate Tic Tac Toe</title>
+  <style>
+      
+*{
+    margin:0;
+    padding:0;
+	background-color: black;
+}
+
+td{
+	background-color: white;
+}
+
+table{
+	
+	width:100vmin;
+	height:100vmin;
+	margin:0 auto;
+}
+
+table table{
+	width :100%;
+	height:100%;
+	border-spacing: 0;	
+}
+
+table table tbody:hover{
+	opacity:1 !important;
+}
+
+  </style>
+  <script>
+var c_t;
+var c_b = [];
+var c_s = [[],[],[],[],[],[],[],[],[]];
+
+window.addEventListener("load", function (e)
+{
+	c_t = document.getElementsByTagName("TABLE")[0];
+	var tmp = c_t.getElementsByTagName("TABLE");
+	for(var i = 0; i < 9; i++)
+	{
+		c_b[i] = tmp[i].parentElement;
+		var temp = tmp[i].getElementsByTagName("TD");
+		for(var j = 0; j < 9; j++)
+			c_s[i][j] = temp[j];
+	}
+
+	function getListener(i, j)
+	{
+		return function (e)
+		{
+			uttt(i, j);
+		};
+	}
+
+	for(var i = 0; i < 9; ++i)for(var j = 0;j<9;++j)
+		c_s[i][j].addEventListener("click", getListener(i,j));
+});
+
+var wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+function test(arr, color)
+{
+	for(var i = 0; i < wins.length; i++)
+	{
+		if(
+            arr[wins[i][0]].style.backgroundColor == color 
+			&& arr[wins[i][1]].style.backgroundColor == color 
+			&& arr[wins[i][2]].style.backgroundColor == color) return true;
+	}
+	return false;
+}
+
+var turn = true;
+var game_end = false;
+function uttt(i, j)
+{
+	if(game_end)return false;
+    if(c_b[i].style.opacity != "") return false;
+	if(c_b[i].style.backgroundColor != "") return false;
+	if(c_s[i][j].style.backgroundColor != "") return false;
+	color = turn?"red":"blue";
+	turn = !turn;
+    c_s[i][j].style.backgroundColor = color;
+	if(test(c_s[i], color))
+	{
+        c_b[i].getElementsByTagName("TBODY")[0].style.opacity = 0;
+        c_b[i].style.backgroundColor = color;
+		if(test(c_b, color))
+        {
+			alert(color + " win!");
+            game_end = true;
+            for(var k = 0; k < 9; k++)
+			c_b[k].style.opacity = "";
+            return true;
+        }
+	}
+	else
+	{
+		var k = 0;
+		for(;k<9 && c_s[i][k].style.backgroundColor != ""; ++k);
+		if(k==9)
+		{
+			c_b[i].getElementsByTagName("TBODY")[0].style.opacity = 0;
+            c_b[i].style.backgroundColor = "#000000";
+		}
+	}
+    
+	if(c_b[j].style.backgroundColor == "")
+		for(var k = 0; k < 9; k++)
+			c_b[k].style.opacity = (j==k? "" : 0.5);
+	else
+		for(var k = 0; k < 9; k++)
+			c_b[k].style.opacity = "";
+	return true;
+}
+	</script>
+ </head>
+ <body>
+   <table>
+    <tr>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    </tr>
+    <tr>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    </tr>
+    <tr>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+     <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    </tr>
+   </table>
+</div>
+ </body>
+</html>

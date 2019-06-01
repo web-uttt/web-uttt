@@ -38,10 +38,10 @@ var c_s = [];
 
 window.addEventListener("load", function (e)
 {
-	function getListener(i, j){return function (e){uttt(i, j);};}
 	c_t = document.getElementsByTagName("TABLE")[0];
 	c_b = Array.from(c_t.getElementsByTagName("TABLE"), x=>x.parentElement);
 	c_s = Array.from(c_b, x=>x.getElementsByTagName("TD"));
+	function getListener(i, j){return function (e){uttt(i, j);};}
 	for(var i = 0; i < 9; i++)for(var j = 0;j<9;++j)c_s[i][j].addEventListener("click", getListener(i,j));
 });
 
@@ -72,8 +72,7 @@ function uttt(i, j)
         {
 			alert(color + " win!");
             game_end = true;
-            for(var k = 0; k < 9; k++)
-				c_b[k].style.opacity = "";
+            for(var x of c_b)x.style.opacity = "";
             return;
         }
 	}

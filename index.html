@@ -73,10 +73,7 @@ var turn = true;
 var game_end = false;
 function uttt(i, j)
 {
-	if(game_end)return false;
-    if(c_b[i].style.opacity) return false;
-	if(c_b[i].style.backgroundColor) return false;
-	if(c_s[i][j].style.backgroundColor) return false;
+	if(c_b[i].style.opacity || c_b[i].style.backgroundColor || c_s[i][j].style.backgroundColor || game_end)return false;
 	color = turn?"red":"blue";
 	turn = !turn;
     c_s[i][j].style.backgroundColor = color;
@@ -100,7 +97,7 @@ function uttt(i, j)
 		if(k==9)
 		{
 			c_b[i].getElementsByTagName("TBODY")[0].style.opacity = 0;
-            c_b[i].style.backgroundColor = "#000000";
+            c_b[i].style.backgroundColor = "transparent";
 		}
 	}
     for(var k = 0; k < 9; k++)

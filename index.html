@@ -24,48 +24,36 @@ table table{
 	height:100%;
 	border-spacing: 0;	
 }
+td[style~="background-color:"] tbody{
+	opacity : 0;
+}
 table table tbody:hover{
-	opacity:1 !important;
+	opacity:1;
 }
   </style>
   <script>
 var c_t;
 var c_b = [];
-var c_s = [[],[],[],[],[],[],[],[],[]];
+var c_s = [];
 
 window.addEventListener("load", function (e)
 {
+	function getListener(i, j){return function (e){uttt(i, j);};}
 	c_t = document.getElementsByTagName("TABLE")[0];
-	var tmp = c_t.getElementsByTagName("TABLE");
-	for(var i = 0; i < 9; i++)
-	{
-		c_b[i] = tmp[i].parentElement;
-		var temp = tmp[i].getElementsByTagName("TD");
-		for(var j = 0; j < 9; j++)
-			c_s[i][j] = temp[j];
-	}
-
-	function getListener(i, j)
-	{
-		return function (e)
-		{
-			uttt(i, j);
-		};
-	}
-
-	for(var i = 0; i < 9; ++i)for(var j = 0;j<9;++j)
-		c_s[i][j].addEventListener("click", getListener(i,j));
+	c_b = Array.from(c_t.getElementsByTagName("TABLE"), x=>x.parentElement);
+	c_s = Array.from(c_b, x=>x.getElementsByTagName("TD"));
+	for(var i = 0; i < 9; i++)for(var j = 0;j<9;++j)c_s[i][j].addEventListener("click", getListener(i,j));
 });
 
-var wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
 function test(arr, color)
 {
-	for(var i = 0; i < wins.length; i++)
+	for(var i of wins)
 		if(
-            arr[wins[i][0]].style.backgroundColor == color 
-			&& arr[wins[i][1]].style.backgroundColor == color 
-			&& arr[wins[i][2]].style.backgroundColor == color) return true;
+            arr[i[0]].style.backgroundColor == color 
+			&& arr[i[1]].style.backgroundColor == color 
+			&& arr[i[2]].style.backgroundColor == color) return true;
 	return false;
 }
 
@@ -73,16 +61,12 @@ var turn = true;
 var game_end = false;
 function uttt(i, j)
 {
-	if(game_end)return false;
-    if(c_b[i].style.opacity) return false;
-	if(c_b[i].style.backgroundColor) return false;
-	if(c_s[i][j].style.backgroundColor) return false;
+	if(c_b[i].style.opacity || c_b[i].style.backgroundColor || c_s[i][j].style.backgroundColor || game_end)return;
 	color = turn?"red":"blue";
 	turn = !turn;
     c_s[i][j].style.backgroundColor = color;
 	if(test(c_s[i], color))
 	{
-        c_b[i].getElementsByTagName("TBODY")[0].style.opacity = 0;
         c_b[i].style.backgroundColor = color;
 		if(test(c_b, color))
         {
@@ -90,23 +74,17 @@ function uttt(i, j)
             game_end = true;
             for(var k = 0; k < 9; k++)
 				c_b[k].style.opacity = "";
-            return true;
+            return;
         }
 	}
 	else
 	{
 		var k = 0;
 		for(;k<9 && c_s[i][k].style.backgroundColor; ++k);
-		if(k==9)
-		{
-			c_b[i].getElementsByTagName("TBODY")[0].style.opacity = 0;
-            c_b[i].style.backgroundColor = "#000000";
-		}
+		if(k==9)c_b[i].style.backgroundColor = "transparent";
 	}
     for(var k = 0; k < 9; k++)
 			c_b[k].style.opacity = (j==k || c_b[j].style.backgroundColor? "" : 0.5);
-		
-	return true;
 }
 	</script>
  </head>

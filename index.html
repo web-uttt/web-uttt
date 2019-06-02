@@ -36,6 +36,12 @@
     td tbody:hover {
       opacity: 1;
     }
+
+    td:not([style*=":"]) td:not([style]):hover {
+      background : var(--color);
+      opacity : 0.5;
+    }
+
   </style>
   <script>
     var c_t, c_b, c_s, turn = true, game_end = false;
@@ -57,12 +63,14 @@
       if (c_b[i].style.opacity || c_b[i].style.backgroundColor || c_s[i][j].style.backgroundColor || game_end) return;
       color = turn ? "red" : "blue";
       turn = !turn;
+      c_t.setAttribute('style', '--color: ' + (turn ? "red" : "blue"));
       c_s[i][j].style.backgroundColor = color;
       if (test(c_s[i], color)) {
         c_b[i].style.backgroundColor = color;
         if (test(c_b, color)) {
           alert(color + " win!");
           game_end = true;
+          c_t.setAttribute('style', "--color:");
           for (let x of c_b) x.style.opacity = "";
           return;
         }
@@ -78,7 +86,7 @@
   </script>
 </head>
 <body>
-  <table class="main">
+  <table class="main" style="--color: red;">
     <tr>
       <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
       <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>

@@ -5,6 +5,8 @@ window.addEventListener("load", function (e) {
   c_s = Array.from(c_b, x => x.getElementsByTagName("TD"));
   function getListener(i, j) { return function (e) { uttt(i, j); }; }
   for (let i = 0; i < 9; ++i)for (let j = 0; j < 9; ++j)c_s[i][j].addEventListener("click", getListener(i, j));
+
+  if('serviceWorker' in navigator)navigator.serviceWorker.register('service-worker.js')
 });
 
 function test(arr, color) {

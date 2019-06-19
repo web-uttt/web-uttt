@@ -3,9 +3,14 @@
     "name": "Ultimate Tic Tac Toe",
     "icons": [
       {
-        "src": "icon.png",
+        "src": "icon-256.png",
         "type": "image/png",
         "sizes": "256x256"
+      },
+      {
+        "src": "icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
       }
     ],
     "start_url": "index.html",

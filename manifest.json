@@ -1,0 +1,15 @@
+{
+    "short_name": "UTTT",
+    "name": "Ultimate Tic Tac Toe",
+    "icons": [
+      {
+        "src": "icon.png",
+        "type": "image/png",
+        "sizes": "256x256"
+      }
+    ],
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#000000"
+  }
